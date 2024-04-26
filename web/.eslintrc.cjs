@@ -5,6 +5,7 @@ module.exports = {
     'plugin:react/recommended',
     'plugin:react/jsx-runtime',
     'plugin:@typescript-eslint/recommended',
+    'plugin:import/recommended',
   ],
   env: {
     "browser": true
@@ -12,6 +13,7 @@ module.exports = {
   plugins: [
     'react',
     '@typescript-eslint',
+    'import'
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
