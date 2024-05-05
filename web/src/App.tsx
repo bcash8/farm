@@ -1,13 +1,18 @@
-import { PotContainer } from "./components/PotContainer";
+import { styled } from "styled-components";
+import { Sidebar } from "./components/Sidebar";
 import { TileGrid } from "./components/TileGrid";
 
 
 export function App() {
   return (
-    <>
+    <Layout>
       <TileGrid />
-      <PotContainer plantName="Potato" />
-    </>
+      <Sidebar />
+    </Layout>
   )
 }
 
+const Layout = styled.div`
+  display: grid;
+  grid-template-columns: 1fr minmax(200px, 20%);
+`

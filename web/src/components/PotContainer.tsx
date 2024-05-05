@@ -22,12 +22,17 @@ export function PotContainer({ plantName }: { plantName: string }) {
   }, [plantRef.current])
 
   useEffect(() => {
-    const int = setInterval(() => setProgress(p => p + 10), 5000)
-    return () => { clearInterval(int); }
+    const int = setInterval(() => setProgress(p => p + 10), 1000)
+    return () => clearInterval(int)
   }, []);
 
+  function handleClick() {
+    if (progress >= 100) {
+      setProgress(0);
+    }
+  }
   return (
-    <Layout progress={progress} plantHeight={plantHeight} draggable={true}>
+    <Layout progress={progress} plantHeight={plantHeight} draggable={true} onClick={handleClick}>
       <PotSVG width='60%' height='60%' />
       <Plant name={plantName} ref={plantRef} width='40%' height='40%' />
     </Layout>
@@ -49,6 +54,7 @@ const Layout = styled.div<{ progress: number, plantHeight: number }>`
   flex-direction: column;
   align-items: center;
   border-radius: inherit;
+  cursor: ${props => props.progress >= 100 ? 'pointer' : 'default'};
 
   :first-child {
     position: absolute;
