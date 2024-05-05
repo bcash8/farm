@@ -6,8 +6,6 @@ import { PotSVG } from '../assets/PotSVG';
 import { PotatoSVG } from '../assets/PotatoSVG';
 // import { PotatoSVG } from '../PotatoSVG'
 
-
-
 export function PotContainer({ plantName }: { plantName: string }) {
   const [progress, setProgress] = useState<number>(0);
   const [plantHeight, setPlantHeight] = useState(1);
@@ -32,7 +30,7 @@ export function PotContainer({ plantName }: { plantName: string }) {
     }
   }
   return (
-    <Layout progress={progress} plantHeight={plantHeight} draggable={true} onClick={handleClick}>
+    <Layout progress={progress} plantHeight={plantHeight}  onClick={handleClick}>
       <PotSVG width='60%' height='60%' />
       <Plant name={plantName} ref={plantRef} width='40%' height='40%' />
     </Layout>
@@ -53,7 +51,6 @@ const Layout = styled.div<{ progress: number, plantHeight: number }>`
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-radius: inherit;
   cursor: ${props => props.progress >= 100 ? 'pointer' : 'default'};
 
   :first-child {
@@ -75,4 +72,5 @@ const Layout = styled.div<{ progress: number, plantHeight: number }>`
   }
 
   background-color: #d3e0d3;
+  border-radius: inherit;
 `

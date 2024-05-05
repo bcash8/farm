@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { styled } from "styled-components";
-import { PotContainer } from "./PotContainer";
 import { Tile } from "./Tile";
 
 export function TileGrid() {
@@ -13,7 +12,7 @@ export function TileGrid() {
   console.log(tiles)
   return (
     <Layout>
-      {tiles.map((name, i) => name === null ? <Tile key={i} /> : <PotContainer key={i} plantName={name} />)}
+      {tiles.map((name, i) => <Tile key={i} category={name !== null ? "Pot" : "Empty"} type={name || ''} />)}
     </Layout>
   )
 }
