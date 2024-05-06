@@ -1,14 +1,21 @@
-import { styled } from "styled-components";
+import emotionIsPropValid from "@emotion/is-prop-valid";
+import { StyleSheetManager, styled } from "styled-components";
 import { Sidebar } from "./components/Sidebar";
 import { TileGrid } from "./components/TileGrid";
 
 
 export function App() {
+  function shouldForwardProp(prop: unknown) {
+    return typeof prop === 'string' ? emotionIsPropValid(prop) : true;
+  }
+
   return (
-    <Layout>
-      <TileGrid />
-      <Sidebar />
-    </Layout>
+    <StyleSheetManager enableVendorPrefixes shouldForwardProp={shouldForwardProp}>
+      <Layout>
+        <TileGrid />
+        <Sidebar />
+      </Layout>
+    </StyleSheetManager>
   )
 }
 
