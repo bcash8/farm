@@ -8,10 +8,10 @@ export function TileGrid() {
   const [beingDragged, setBeingDragged] = useState<number | undefined>(undefined);
 
   useEffect(() => {
-    const tileArr = Array(5).fill(null);
+    const tileArr = Array(32).fill(null);
     const filledArr: TileType[] = tileArr.map(() => {
       const num = Math.random();
-      if (num > .5) return { category: 'Plant', type: num > .75 ? 'Carrot' : 'Potato', progress: 100, amount: 1 }
+      if (num > .25) return { category: 'Plant', type: num > .75 ? 'Carrot' : 'Potato', progress: 100, amount: 1 }
       else return { category: 'Empty' }
     });
 
