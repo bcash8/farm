@@ -1,18 +1,27 @@
 import { useEffect, useState, type CSSProperties, type DragEvent } from "react";
 import { styled } from "styled-components";
+import type { TileType } from "../validators/tile";
 import { PotContainer } from "./PotContainer";
 
 type TileProps = {
   style?: CSSProperties;
-  category: string;
-  type: string;
+  tile: TileType;
+  isDragged: () => void;
+  onDrop: () => void;
+  onClick: () => void;
 }
+
 export function Tile(props: TileProps) {
-  const [draggedOver, setDraggedOver] = useState(false);
-  
+  const [draggedOver, setDraggedOver] = useState<boolean>(false);
+  const [tile, setTile] = useState<TileType>({ category: 'Empty' });
+
+  useEffect(() => {
+    setTile(props.tile);
+  }, [props.tile])
+
   function handleDragOver(e: DragEvent) {
     e.preventDefault();
-    if (props.category !== 'Empty') return;
+    if (tile.category !== 'Empty') return;
     setDraggedOver(true);
   }
 
@@ -23,23 +32,22 @@ export function Tile(props: TileProps) {
 
   function handleDrop(e: DragEvent) {
     e.preventDefault();
+    props.onDrop();
     setDraggedOver(false)
   }
-
-  useEffect(() => {
-    console.log(draggedOver)
-  }, [draggedOver])
 
   return (
     <TileStyle
       style={props.style}
       onDragOver={handleDragOver}
-      onDragEnd={handleDrop}
+      onDrop={handleDrop}
       onDragLeave={handleDragOverLeave}
-      draggable={props.category !== 'Empty'}
+      onDragStart={() => props.isDragged()}
+      draggable={tile.category !== 'Empty'}
       draggedOver={draggedOver}
+      onClick={props.onClick}
     >
-      {props.category === 'Pot' && <PotContainer plantName={props.type} />}
+      {tile.category === 'Plant' && <PotContainer {...tile} />}
     </TileStyle>
   )
 }

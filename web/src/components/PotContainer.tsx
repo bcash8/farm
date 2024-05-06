@@ -1,49 +1,29 @@
-import { forwardRef, useEffect, useRef, useState } from 'react';
+import { forwardRef, useRef } from 'react';
 import { styled } from 'styled-components';
-// import { CarrotSVG } from '../CarrotSVG';
 import { CarrotSVG } from '../assets/CarrotSVG';
 import { PotSVG } from '../assets/PotSVG';
 import { PotatoSVG } from '../assets/PotatoSVG';
-// import { PotatoSVG } from '../PotatoSVG'
+import type { PlantTile } from '../validators/tile';
 
-export function PotContainer({ plantName }: { plantName: string }) {
-  const [progress, setProgress] = useState<number>(0);
-  const [plantHeight, setPlantHeight] = useState(1);
+
+export function PotContainer(props: PlantTile) {
   const plantRef = useRef<SVGSVGElement | null>(null);
 
-  useEffect(() => {
-    const plant = plantRef.current
-    if (plant !== null) {
-      setPlantHeight(plant.clientHeight)
-      console.log("H", plantHeight)
-    }
-  }, [plantRef.current])
-
-  useEffect(() => {
-    const int = setInterval(() => setProgress(p => p + 10), 1000)
-    return () => clearInterval(int)
-  }, []);
-
-  function handleClick() {
-    if (progress >= 100) {
-      setProgress(0);
-    }
-  }
   return (
-    <Layout progress={progress} plantHeight={plantHeight}  onClick={handleClick}>
+    <Layout progress={props.progress}>
       <PotSVG width='60%' height='60%' />
-      <Plant name={plantName} ref={plantRef} width='40%' height='40%' />
+      <Plant type={props.type} ref={plantRef} width='40%' height='40%' />
     </Layout>
   )
 }
 
-export const Plant = forwardRef<SVGSVGElement, { name?: string, width?: string, height?: string }>((props, ref) => {
-  if (props.name === 'Potato') return <PotatoSVG ref={ref} width={props.width} height={props.height} />
-  if (props.name === 'Carrot') return <CarrotSVG ref={ref} width={props.width} height={props.height} />
+export const Plant = forwardRef<SVGSVGElement, { type?: string, width?: string, height?: string }>((props, ref) => {
+  if (props.type === 'Potato') return <PotatoSVG ref={ref} width={props.width} height={props.height} />
+  if (props.type === 'Carrot') return <CarrotSVG ref={ref} width={props.width} height={props.height} />
 })
 Plant.displayName = 'Plant';
 
-const Layout = styled.div<{ progress: number, plantHeight: number }>`
+const Layout = styled.div<{ progress: number }>`
   padding: 10px;
   width: 100%;
   aspect-ratio: 1 / 1;
